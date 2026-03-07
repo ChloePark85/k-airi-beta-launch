@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -22,7 +22,7 @@
     --secondary-foreground: 0 0% 5%;
 
     --muted: 270 20% 15%;
-    --muted-foreground: 270 10% 60%;
+    --muted-foreground: 270 10% 55%;
 
     --accent: 180 80% 50%;
     --accent-foreground: 0 0% 5%;
@@ -30,21 +30,25 @@
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 270 30% 20%;
-    --input: 270 30% 15%;
+    --border: 270 30% 18%;
+    --input: 270 30% 12%;
     --ring: 270 80% 60%;
 
     --radius: 0.75rem;
 
     --neon-purple: 270 80% 60%;
     --neon-cyan: 180 80% 50%;
+    --neon-pink: 320 80% 60%;
     --neon-purple-glow: 270 100% 70%;
     --neon-cyan-glow: 180 100% 65%;
 
     --gradient-neon: linear-gradient(135deg, hsl(270 80% 60%), hsl(180 80% 50%));
-    --gradient-bg: linear-gradient(180deg, hsl(270 50% 8%) 0%, hsl(270 60% 3%) 100%);
-    --shadow-neon-purple: 0 0 20px hsl(270 80% 60% / 0.4), 0 0 40px hsl(270 80% 60% / 0.2);
-    --shadow-neon-cyan: 0 0 20px hsl(180 80% 50% / 0.4), 0 0 40px hsl(180 80% 50% / 0.2);
+    --gradient-neon-pink: linear-gradient(135deg, hsl(320 80% 55%), hsl(270 80% 60%));
+    --gradient-bg: linear-gradient(180deg, hsl(270 50% 6%) 0%, hsl(260 70% 3%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(270 40% 10% / 0.7), hsl(260 50% 6% / 0.5));
+    --shadow-neon-purple: 0 0 20px hsl(270 80% 60% / 0.35), 0 0 60px hsl(270 80% 60% / 0.15);
+    --shadow-neon-cyan: 0 0 20px hsl(180 80% 50% / 0.35), 0 0 60px hsl(180 80% 50% / 0.15);
+    --shadow-neon-button: 0 4px 20px hsl(270 80% 60% / 0.4), 0 0 60px hsl(180 80% 50% / 0.2), inset 0 1px 0 hsl(0 0% 100% / 0.15);
   }
 }
 
@@ -54,83 +58,165 @@
   }
 
   body {
-    @apply bg-background text-foreground font-sans;
-    font-family: 'Noto Sans KR', sans-serif;
+    @apply bg-background text-foreground;
+    font-family: 'Noto Sans KR', 'Outfit', sans-serif;
     background: var(--gradient-bg);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }
 
 @layer components {
+  .font-display {
+    font-family: 'Outfit', 'Noto Sans KR', sans-serif;
+  }
+
   .neon-card {
-    @apply relative rounded-xl border backdrop-blur-xl;
-    background: hsl(var(--card) / 0.6);
-    border-color: hsl(var(--neon-purple) / 0.3);
-    transition: all 0.3s ease;
+    @apply relative rounded-2xl border backdrop-blur-xl;
+    background: var(--gradient-card);
+    border-color: hsl(var(--neon-purple) / 0.2);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .neon-card:hover {
-    border-color: hsl(var(--neon-cyan) / 0.6);
+    border-color: hsl(var(--neon-cyan) / 0.5);
     box-shadow: var(--shadow-neon-cyan);
+    transform: translateY(-2px);
   }
 
   .neon-button {
-    @apply relative px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300;
+    @apply relative px-8 py-4 rounded-2xl font-bold text-lg tracking-wide transition-all duration-400 cursor-pointer;
     background: var(--gradient-neon);
     color: hsl(var(--primary-foreground));
-    box-shadow: var(--shadow-neon-purple);
+    box-shadow: var(--shadow-neon-button);
+    letter-spacing: 0.02em;
   }
 
   .neon-button:hover {
-    transform: scale(1.05);
-    box-shadow: var(--shadow-neon-purple), var(--shadow-neon-cyan);
+    transform: scale(1.06) translateY(-1px);
+    box-shadow: var(--shadow-neon-purple), var(--shadow-neon-cyan), 0 8px 32px hsl(270 80% 60% / 0.3);
+    filter: brightness(1.1);
+  }
+
+  .neon-button:active {
+    transform: scale(1.02);
   }
 
   .neon-badge {
-    @apply inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-sm font-semibold;
-    background: hsl(var(--neon-cyan) / 0.15);
-    border: 1px solid hsl(var(--neon-cyan) / 0.4);
+    @apply inline-flex items-center gap-2 px-5 py-2 rounded-full text-sm font-semibold tracking-wide;
+    background: hsl(var(--neon-cyan) / 0.1);
+    border: 1px solid hsl(var(--neon-cyan) / 0.3);
     color: hsl(var(--neon-cyan));
+    backdrop-filter: blur(8px);
+  }
+
+  .neon-badge-fire {
+    @apply inline-flex items-center gap-2 px-5 py-2 rounded-full text-sm font-bold tracking-wide;
+    background: hsl(var(--neon-pink) / 0.12);
+    border: 1px solid hsl(var(--neon-pink) / 0.4);
+    color: hsl(var(--neon-pink));
+    backdrop-filter: blur(8px);
+    animation: pulse-glow 2s ease-in-out infinite;
   }
 
   .neon-input {
-    @apply w-full px-4 py-3 rounded-lg border bg-transparent outline-none transition-all duration-300;
-    background: hsl(var(--input) / 0.5);
-    border-color: hsl(var(--neon-purple) / 0.3);
+    @apply w-full px-4 py-3.5 rounded-xl border bg-transparent outline-none transition-all duration-300 text-sm;
+    background: hsl(var(--input) / 0.6);
+    border-color: hsl(var(--neon-purple) / 0.2);
     color: hsl(var(--foreground));
+    backdrop-filter: blur(4px);
   }
 
   .neon-input:focus {
     border-color: hsl(var(--neon-cyan) / 0.6);
-    box-shadow: 0 0 10px hsl(var(--neon-cyan) / 0.2);
+    box-shadow: 0 0 0 3px hsl(var(--neon-cyan) / 0.1), 0 0 15px hsl(var(--neon-cyan) / 0.15);
+  }
+
+  .neon-input::placeholder {
+    color: hsl(var(--muted-foreground) / 0.6);
   }
 
   .section-title {
-    @apply text-3xl md:text-4xl font-extrabold text-center mb-4;
+    @apply text-3xl md:text-5xl font-extrabold text-center mb-4 tracking-tight;
+    font-family: 'Outfit', 'Noto Sans KR', sans-serif;
     background: var(--gradient-neon);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
+  .section-subtitle {
+    @apply text-center text-muted-foreground mb-14 text-base md:text-lg;
+    letter-spacing: 0.01em;
+  }
+
   .glow-text {
-    text-shadow: 0 0 10px hsl(var(--neon-purple) / 0.5), 0 0 20px hsl(var(--neon-purple) / 0.3);
+    text-shadow: 0 0 20px hsl(var(--neon-purple) / 0.4), 0 0 40px hsl(var(--neon-purple) / 0.2);
   }
 
   @keyframes float {
     0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-10px); }
+    50% { transform: translateY(-12px); }
   }
 
   @keyframes bounce-scroll {
     0%, 100% { transform: translateY(0); opacity: 1; }
-    50% { transform: translateY(8px); opacity: 0.5; }
+    50% { transform: translateY(10px); opacity: 0.4; }
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% { box-shadow: 0 0 8px hsl(var(--neon-pink) / 0.3); }
+    50% { box-shadow: 0 0 20px hsl(var(--neon-pink) / 0.5); }
+  }
+
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 
   .animate-float {
-    animation: float 3s ease-in-out infinite;
+    animation: float 4s ease-in-out infinite;
   }
 
   .animate-bounce-scroll {
-    animation: bounce-scroll 2s ease-in-out infinite;
+    animation: bounce-scroll 2.5s ease-in-out infinite;
+  }
+
+  .animate-fade-up {
+    animation: fade-up 0.6s ease-out both;
+  }
+
+  .animate-fade-up-delay-1 {
+    animation: fade-up 0.6s ease-out 0.1s both;
+  }
+
+  .animate-fade-up-delay-2 {
+    animation: fade-up 0.6s ease-out 0.2s both;
+  }
+
+  .animate-fade-up-delay-3 {
+    animation: fade-up 0.6s ease-out 0.3s both;
+  }
+
+  .shimmer-text {
+    background: linear-gradient(90deg, hsl(var(--foreground)) 40%, hsl(var(--neon-cyan)) 50%, hsl(var(--foreground)) 60%);
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: shimmer 3s linear infinite;
+  }
+
+  /* Grid pattern overlay */
+  .grid-pattern {
+    background-image: 
+      linear-gradient(hsl(var(--neon-purple) / 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(var(--neon-purple) / 0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
   }
 }
