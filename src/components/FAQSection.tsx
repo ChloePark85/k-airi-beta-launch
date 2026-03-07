@@ -20,26 +20,31 @@ const FAQSection = () => {
   const [open, setOpen] = useState<number | null>(null);
 
   return (
-    <section className="py-24 px-6">
+    <section className="py-28 px-6">
       <div className="max-w-3xl mx-auto">
         <h2 className="section-title">자주 묻는 질문</h2>
-        <div className="mt-12 space-y-4">
+        <p className="section-subtitle">궁금한 점이 있으신가요?</p>
+        <div className="space-y-4">
           {faqs.map((faq, i) => (
             <div key={i} className="neon-card overflow-hidden">
               <button
                 onClick={() => setOpen(open === i ? null : i)}
-                className="w-full p-6 flex items-center justify-between text-left font-semibold"
+                className="w-full p-6 md:p-7 flex items-center justify-between text-left font-semibold text-base md:text-lg font-display cursor-pointer"
               >
-                {faq.q}
+                <span>{faq.q}</span>
                 <ChevronDown
-                  className={`w-5 h-5 text-neon-cyan shrink-0 transition-transform duration-300 ${open === i ? "rotate-180" : ""}`}
+                  className={`w-5 h-5 text-neon-cyan shrink-0 ml-4 transition-transform duration-300 ${open === i ? "rotate-180" : ""}`}
                 />
               </button>
               <div
-                className="overflow-hidden transition-all duration-300"
-                style={{ maxHeight: open === i ? "200px" : "0", opacity: open === i ? 1 : 0 }}
+                className="overflow-hidden transition-all duration-400"
+                style={{ 
+                  maxHeight: open === i ? "200px" : "0", 
+                  opacity: open === i ? 1 : 0,
+                  transition: "max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease"
+                }}
               >
-                <p className="px-6 pb-6 text-muted-foreground text-sm">{faq.a}</p>
+                <p className="px-6 md:px-7 pb-6 md:pb-7 text-muted-foreground text-sm leading-relaxed">{faq.a}</p>
               </div>
             </div>
           ))}
